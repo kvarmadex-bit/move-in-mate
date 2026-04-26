@@ -1,119 +1,855 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Move-in Mate</title>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Move-in Mate helps new property owners coordinate utilities, internet, cooling, gas, and maintenance setup with less admin."
+  />
+  <title>Move-in Mate | Home Setup Concierge</title>
   <style>
+    :root {
+      --ink: #15201c;
+      --muted: #65706b;
+      --paper: #fbfaf6;
+      --surface: #ffffff;
+      --line: #ded9ce;
+      --sage: #6f8f78;
+      --sage-dark: #385f49;
+      --coral: #dd765f;
+      --gold: #c8a45d;
+      --mist: #e8eee8;
+      --shadow: 0 24px 70px rgba(21, 32, 28, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
-      font-family: Arial;
       margin: 0;
-      padding: 20px;
-      background: #f7f7f7;
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--paper);
+      line-height: 1.55;
     }
-    .container {
-      max-width: 600px;
-      margin: auto;
-      background: white;
-      padding: 20px;
-      border-radius: 10px;
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
-    h1 { font-size: 24px; }
-    button {
+
+    .page {
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .nav {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      margin: 0 auto;
+      max-width: 1180px;
+      padding: 22px 24px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .brand {
+      align-items: center;
+      display: flex;
+      font-weight: 800;
+      gap: 10px;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      align-items: center;
+      background: var(--ink);
+      border-radius: 8px;
+      color: #fff;
+      display: inline-flex;
+      height: 34px;
+      justify-content: center;
+      width: 34px;
+    }
+
+    .nav-link {
+      border: 1px solid rgba(21, 32, 28, 0.16);
+      border-radius: 999px;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 750;
+      padding: 10px 16px;
+      transition: 180ms ease;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      background: var(--ink);
+      color: #fff;
+      outline: none;
+    }
+
+    .hero {
+      display: grid;
+      gap: 34px;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 0.9fr);
+      margin: 0 auto;
+      max-width: 1180px;
+      padding: 42px 24px 70px;
+      position: relative;
+    }
+
+    .hero-copy {
+      align-self: center;
+      max-width: 700px;
+    }
+
+    .eyebrow {
+      align-items: center;
+      color: var(--sage-dark);
+      display: inline-flex;
+      font-size: 13px;
+      font-weight: 800;
+      gap: 8px;
+      letter-spacing: 0.08em;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      background: var(--coral);
+      border-radius: 999px;
+      content: "";
+      height: 8px;
+      width: 8px;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(46px, 7vw, 86px);
+      font-weight: 650;
+      letter-spacing: 0;
+      line-height: 0.94;
+      margin-bottom: 24px;
+    }
+
+    .lead {
+      color: var(--muted);
+      font-size: clamp(18px, 2vw, 22px);
+      max-width: 620px;
+    }
+
+    .hero-actions {
+      align-items: center;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 32px;
+    }
+
+    .button {
+      align-items: center;
+      border-radius: 999px;
+      display: inline-flex;
+      font-weight: 800;
+      justify-content: center;
+      min-height: 52px;
+      padding: 14px 22px;
+      transition: 180ms ease;
+    }
+
+    .button-primary {
+      background: var(--ink);
+      box-shadow: 0 16px 34px rgba(21, 32, 28, 0.22);
+      color: #fff;
+    }
+
+    .button-primary:hover,
+    .button-primary:focus-visible {
+      background: var(--sage-dark);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .button-secondary {
+      border: 1px solid var(--line);
+      color: var(--ink);
+    }
+
+    .button-secondary:hover,
+    .button-secondary:focus-visible {
+      background: var(--mist);
+      outline: none;
+    }
+
+    .proof {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 44px;
+      max-width: 680px;
+    }
+
+    .proof-item {
+      border-left: 1px solid var(--line);
+      padding-left: 16px;
+    }
+
+    .proof strong {
+      display: block;
+      font-size: 24px;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    .proof span {
+      color: var(--muted);
+      display: block;
+      font-size: 13px;
+      margin-top: 8px;
+    }
+
+    .hero-visual {
+      align-self: stretch;
+      background:
+        linear-gradient(180deg, rgba(21, 32, 28, 0.02), rgba(21, 32, 28, 0.24)),
+        url("https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85") center / cover;
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      min-height: 590px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .visual-note {
+      backdrop-filter: blur(18px);
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 20px;
+      bottom: 24px;
+      box-shadow: 0 18px 48px rgba(21, 32, 28, 0.18);
+      left: 24px;
+      max-width: calc(100% - 48px);
+      padding: 18px;
+      position: absolute;
+    }
+
+    .visual-note strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 4px;
+    }
+
+    .visual-note span {
+      color: var(--muted);
+      display: block;
+      font-size: 14px;
+    }
+
+    .section {
+      margin: 0 auto;
+      max-width: 1180px;
+      padding: 62px 24px;
+    }
+
+    .band {
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+      border-top: 1px solid var(--line);
+    }
+
+    .section-heading {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: minmax(0, 0.9fr) minmax(280px, 0.55fr);
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(34px, 4vw, 54px);
+      font-weight: 650;
+      letter-spacing: 0;
+      line-height: 1;
+      margin-bottom: 0;
+    }
+
+    .section-heading p {
+      align-self: end;
+      color: var(--muted);
+      font-size: 17px;
+      margin-bottom: 2px;
+    }
+
+    .comparison {
+      display: grid;
+      gap: 18px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 26px;
+    }
+
+    .panel.accent {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #fff;
+    }
+
+    .panel h3 {
+      font-size: 21px;
+      margin-bottom: 18px;
+    }
+
+    .panel ul {
+      display: grid;
+      gap: 14px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .panel li {
+      align-items: flex-start;
+      display: flex;
+      gap: 12px;
+    }
+
+    .panel li::before {
+      background: var(--coral);
+      border-radius: 999px;
+      content: "";
+      flex: 0 0 8px;
+      height: 8px;
+      margin-top: 9px;
+      width: 8px;
+    }
+
+    .panel.accent li::before {
+      background: var(--gold);
+    }
+
+    .services {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .service {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      min-height: 130px;
+      padding: 20px;
+    }
+
+    .service-icon {
+      align-items: center;
+      background: var(--mist);
+      border-radius: 8px;
+      color: var(--sage-dark);
+      display: inline-flex;
+      height: 38px;
+      justify-content: center;
+      margin-bottom: 18px;
+      width: 38px;
+    }
+
+    .service strong {
+      display: block;
+      font-size: 16px;
+    }
+
+    .form-wrap {
+      display: grid;
+      gap: 34px;
+      grid-template-columns: minmax(0, 0.78fr) minmax(340px, 0.9fr);
+      padding-bottom: 86px;
+    }
+
+    .form-intro {
+      align-self: start;
+      position: sticky;
+      top: 24px;
+    }
+
+    .steps {
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 18px;
+      margin-top: 32px;
+      padding-top: 24px;
+    }
+
+    .step {
+      display: grid;
+      gap: 14px;
+      grid-template-columns: 34px 1fr;
+    }
+
+    .step-number {
+      align-items: center;
+      background: var(--sage-dark);
+      border-radius: 999px;
+      color: #fff;
+      display: flex;
+      font-size: 13px;
+      font-weight: 800;
+      height: 34px;
+      justify-content: center;
+      width: 34px;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .step span {
+      color: var(--muted);
+      display: block;
+      font-size: 15px;
+    }
+
+    form {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: clamp(22px, 4vw, 36px);
+    }
+
+    .form-grid {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field.full {
+      grid-column: 1 / -1;
+    }
+
+    label,
+    .legend {
+      color: #2f3935;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    input,
+    select,
+    textarea {
+      appearance: none;
+      background: #fbfaf6;
+      border: 1px solid #d8d1c5;
+      border-radius: 8px;
+      color: var(--ink);
+      font: inherit;
+      min-height: 50px;
+      padding: 13px 14px;
+      transition: 160ms ease;
       width: 100%;
-      padding: 12px;
-      background: black;
-      color: white;
-      border: none;
-      margin-top: 10px;
+    }
+
+    select {
+      background-image:
+        linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+        linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+      background-position:
+        calc(100% - 19px) 22px,
+        calc(100% - 14px) 22px;
+      background-repeat: no-repeat;
+      background-size: 5px 5px, 5px 5px;
+      padding-right: 40px;
+    }
+
+    textarea {
+      min-height: 118px;
+      resize: vertical;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      background: #fff;
+      border-color: var(--sage-dark);
+      box-shadow: 0 0 0 4px rgba(111, 143, 120, 0.16);
+      outline: none;
+    }
+
+    .checks {
+      display: grid;
+      gap: 10px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      margin-top: 4px;
+    }
+
+    .check {
+      align-items: center;
+      background: #fbfaf6;
+      border: 1px solid #d8d1c5;
+      border-radius: 8px;
       cursor: pointer;
+      display: flex;
+      gap: 10px;
+      min-height: 48px;
+      padding: 10px 12px;
     }
-    input, select {
+
+    .check input {
+      accent-color: var(--sage-dark);
+      height: 18px;
+      min-height: 18px;
+      padding: 0;
+      width: 18px;
+    }
+
+    .check span {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .submit {
+      background: var(--ink);
+      border: 0;
+      border-radius: 999px;
+      box-shadow: 0 16px 34px rgba(21, 32, 28, 0.22);
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 850;
+      min-height: 56px;
+      padding: 15px 22px;
+      transition: 180ms ease;
       width: 100%;
-      padding: 10px;
-      margin-top: 10px;
     }
-    .box {
-      background: #f0f0f0;
-      padding: 10px;
-      margin-top: 10px;
+
+    .submit:hover,
+    .submit:focus-visible {
+      background: var(--sage-dark);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .fine-print {
+      color: var(--muted);
+      font-size: 13px;
+      margin: 14px 0 0;
+      text-align: center;
+    }
+
+    .footer {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 14px;
+      margin: 0 auto;
+      max-width: 1180px;
+      padding: 24px;
+    }
+
+    @media (max-width: 920px) {
+      .hero,
+      .section-heading,
+      .form-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding-top: 24px;
+      }
+
+      .hero-visual {
+        min-height: 430px;
+      }
+
+      .form-intro {
+        position: static;
+      }
+
+      .services {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav {
+        padding: 18px 18px 8px;
+      }
+
+      .nav-link {
+        display: none;
+      }
+
+      .hero,
+      .section,
+      .footer {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .hero {
+        padding-bottom: 48px;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .hero-actions,
+      .button {
+        width: 100%;
+      }
+
+      .proof,
+      .comparison,
+      .services,
+      .form-grid,
+      .checks {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-visual {
+        border-radius: 18px;
+        min-height: 360px;
+      }
+
+      .visual-note {
+        border-radius: 14px;
+        bottom: 14px;
+        left: 14px;
+        max-width: calc(100% - 28px);
+      }
+
+      .panel,
+      .service,
+      form {
+        border-radius: 8px;
+      }
     }
   </style>
 </head>
 
 <body>
+  <div class="page">
+    <nav class="nav" aria-label="Main navigation">
+      <a class="brand" href="#">
+        <span class="brand-mark" aria-hidden="true">M</span>
+        <span>Move-in Mate</span>
+      </a>
+      <a class="nav-link" href="#book">Book setup</a>
+    </nav>
 
-<div class="container">
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <div class="eyebrow">Home setup concierge</div>
+          <h1 id="hero-title">Set up your new home without the headache</h1>
+          <p class="lead">
+            Move-in Mate coordinates utilities, internet, cooling, gas, and maintenance so first-time property owners can go from keys to comfortable faster.
+          </p>
 
-<h1>Set up your new home without the headache</h1>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#book">Book setup</a>
+            <a class="button button-secondary" href="#compare">See what we handle</a>
+          </div>
 
-<p>We help first-time property owners set up utilities, internet, and more.</p>
+          <div class="proof" aria-label="Move-in Mate highlights">
+            <div class="proof-item">
+              <strong>10 min</strong>
+              <span>to share your details</span>
+            </div>
+            <div class="proof-item">
+              <strong>24 hrs</strong>
+              <span>for WhatsApp follow-up</span>
+            </div>
+            <div class="proof-item">
+              <strong>5+</strong>
+              <span>setup categories covered</span>
+            </div>
+          </div>
+        </div>
 
-<div class="box">
-<b>Doing it yourself:</b>
-<ul>
-<li>5–8 hours of effort</li>
-<li>Multiple providers</li>
-<li>Repeated forms</li>
-</ul>
-</div>
+        <div class="hero-visual" role="img" aria-label="A bright finished living room ready for move-in">
+          <div class="visual-note">
+            <strong>From handover to home-ready</strong>
+            <span>One guided setup flow, fewer provider calls, less repeated admin.</span>
+          </div>
+        </div>
+      </section>
 
-<div class="box">
-<b>With Move-in Mate:</b>
-<ul>
-<li>10 mins to get started</li>
-<li>We handle coordination</li>
-<li>Faster move-in</li>
-</ul>
-</div>
+      <div class="band" id="compare">
+        <section class="section" aria-labelledby="compare-title">
+          <div class="section-heading">
+            <h2 id="compare-title">The admin pile-up, handled with care</h2>
+            <p>Keep the decisions. Let us help coordinate the provider chase, paperwork loops, and setup timing.</p>
+          </div>
 
-<h3>Book Setup</h3>
+          <div class="comparison">
+            <div class="panel">
+              <h3>Doing it yourself</h3>
+              <ul>
+                <li>5-8 hours of effort across calls, emails, and forms</li>
+                <li>Multiple providers with different requirements and timelines</li>
+                <li>Repeated details, missed documents, and move-in friction</li>
+              </ul>
+            </div>
 
-<h3>Book Setup</h3>
-<p>Tell us a few details and we’ll reach out on WhatsApp within 24 hours.</p>
+            <div class="panel accent">
+              <h3>With Move-in Mate</h3>
+              <ul>
+                <li>10 minutes to get started with the essentials</li>
+                <li>Guided coordination for the setup categories you choose</li>
+                <li>Clear next steps so your move-in can happen faster</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
 
-<form action="https://formspree.io/f/xpqknolq" method="POST">
-  <input type="text" name="name" placeholder="Your Name" required />
+      <section class="section" aria-labelledby="services-title">
+        <div class="section-heading">
+          <h2 id="services-title">Cover the essentials before move-in day</h2>
+          <p>Select only what you need. We will follow up on WhatsApp to confirm the details and timing.</p>
+        </div>
 
-  <input type="tel" name="whatsapp" placeholder="WhatsApp Number" required />
+        <div class="services">
+          <div class="service">
+            <span class="service-icon" aria-hidden="true">U</span>
+            <strong>Utilities</strong>
+          </div>
+          <div class="service">
+            <span class="service-icon" aria-hidden="true">Wi</span>
+            <strong>Internet</strong>
+          </div>
+          <div class="service">
+            <span class="service-icon" aria-hidden="true">C</span>
+            <strong>Cooling</strong>
+          </div>
+          <div class="service">
+            <span class="service-icon" aria-hidden="true">G</span>
+            <strong>Gas</strong>
+          </div>
+          <div class="service">
+            <span class="service-icon" aria-hidden="true">M</span>
+            <strong>Maintenance</strong>
+          </div>
+        </div>
+      </section>
 
-  <input type="text" name="property_area" placeholder="Property Area / Building" required />
+      <section class="section form-wrap" id="book" aria-labelledby="book-title">
+        <div class="form-intro">
+          <div class="eyebrow">Book setup</div>
+          <h2 id="book-title">Tell us where you are moving. We will take it from there.</h2>
+          <p class="lead">Share a few details and we will reach out on WhatsApp within 24 hours.</p>
 
-  <select name="property_type" required>
-    <option value="">Property Type</option>
-    <option>Apartment</option>
-    <option>Villa</option>
-    <option>Townhouse</option>
-  </select>
+          <div class="steps" aria-label="How booking works">
+            <div class="step">
+              <span class="step-number">1</span>
+              <p><strong>Submit your move-in details</strong><span>Area, property type, date, and services needed.</span></p>
+            </div>
+            <div class="step">
+              <span class="step-number">2</span>
+              <p><strong>Confirm on WhatsApp</strong><span>We clarify timing, documents, and provider preferences.</span></p>
+            </div>
+            <div class="step">
+              <span class="step-number">3</span>
+              <p><strong>Move in with less admin</strong><span>You get clearer next steps and coordinated setup support.</span></p>
+            </div>
+          </div>
+        </div>
 
-  <input type="date" name="move_in_date" required />
+        <form action="https://formspree.io/f/xpqknolq" method="POST">
+          <div class="form-grid">
+            <div class="field">
+              <label for="name">Your name</label>
+              <input id="name" type="text" name="name" autocomplete="name" placeholder="Your name" required />
+            </div>
 
-  <label style="display:block; margin-top:12px;">Services Needed</label>
-  <label><input type="checkbox" name="services" value="Utilities" /> Utilities</label><br />
-  <label><input type="checkbox" name="services" value="Internet" /> Internet</label><br />
-  <label><input type="checkbox" name="services" value="Cooling" /> Cooling</label><br />
-  <label><input type="checkbox" name="services" value="Gas" /> Gas</label><br />
-  <label><input type="checkbox" name="services" value="Maintenance" /> Maintenance</label><br />
+            <div class="field">
+              <label for="whatsapp">WhatsApp number</label>
+              <input id="whatsapp" type="tel" name="whatsapp" autocomplete="tel" placeholder="+971 50 000 0000" required />
+            </div>
 
-  <select name="budget" required>
-    <option value="">Budget for setup help</option>
-    <option>Under AED 200</option>
-    <option>AED 200–500</option>
-    <option>AED 500+</option>
-  </select>
+            <div class="field">
+              <label for="property_area">Property area / building</label>
+              <input id="property_area" type="text" name="property_area" placeholder="Dubai Marina, The Greens..." required />
+            </div>
 
-  <textarea
-    name="notes"
-    placeholder="Anything else we should know?"
-    rows="4"
-    style="width:100%; padding:10px; margin-top:10px;"
-  ></textarea>
+            <div class="field">
+              <label for="property_type">Property type</label>
+              <select id="property_type" name="property_type" required>
+                <option value="">Select property type</option>
+                <option>Apartment</option>
+                <option>Villa</option>
+                <option>Townhouse</option>
+              </select>
+            </div>
 
-  <input type="hidden" name="_subject" value="New Move-in Mate Lead" />
+            <div class="field">
+              <label for="move_in_date">Move-in date</label>
+              <input id="move_in_date" type="date" name="move_in_date" required />
+            </div>
 
-  <button type="submit">Book Setup</button>
-</form>
+            <div class="field">
+              <label for="budget">Budget for setup help</label>
+              <select id="budget" name="budget" required>
+                <option value="">Select budget</option>
+                <option>Under AED 200</option>
+                <option>AED 200-500</option>
+                <option>AED 500+</option>
+              </select>
+            </div>
 
-</div>
+            <div class="field full">
+              <span class="legend">Services needed</span>
+              <div class="checks">
+                <label class="check"><input type="checkbox" name="services" value="Utilities" /> <span>Utilities</span></label>
+                <label class="check"><input type="checkbox" name="services" value="Internet" /> <span>Internet</span></label>
+                <label class="check"><input type="checkbox" name="services" value="Cooling" /> <span>Cooling</span></label>
+                <label class="check"><input type="checkbox" name="services" value="Gas" /> <span>Gas</span></label>
+                <label class="check"><input type="checkbox" name="services" value="Maintenance" /> <span>Maintenance</span></label>
+              </div>
+            </div>
 
+            <div class="field full">
+              <label for="notes">Anything else we should know?</label>
+              <textarea id="notes" name="notes" placeholder="Timeline, access details, preferred providers, or special requirements..." rows="4"></textarea>
+            </div>
+          </div>
+
+          <input type="hidden" name="_subject" value="New Move-in Mate Lead" />
+          <button class="submit" type="submit">Book setup</button>
+          <p class="fine-print">Your request goes securely through Formspree. We will only use it to follow up about your setup.</p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Move-in Mate helps coordinate home setup support for new property owners.</span>
+    </footer>
+  </div>
 </body>
 </html>
