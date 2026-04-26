@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Move-in Mate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: Arial;
+      margin: 0;
+      padding: 20px;
+      background: #f7f7f7;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+    }
+    h1 { font-size: 24px; }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: black;
+      color: white;
+      border: none;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    .box {
+      background: #f0f0f0;
+      padding: 10px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>Set up your new home without the headache</h1>
+
+<p>We help first-time property owners set up utilities, internet, and more.</p>
+
+<div class="box">
+<b>Doing it yourself:</b>
+<ul>
+<li>5–8 hours of effort</li>
+<li>Multiple providers</li>
+<li>Repeated forms</li>
+</ul>
+</div>
+
+<div class="box">
+<b>With Move-in Mate:</b>
+<ul>
+<li>10 mins to get started</li>
+<li>We handle coordination</li>
+<li>Faster move-in</li>
+</ul>
+</div>
+
+<h3>Book Setup</h3>
+
+<form action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+  <input name="name" placeholder="Your Name" required />
+  <input name="phone" placeholder="WhatsApp Number" required />
+  <input name="area" placeholder="Property Area" />
+  <input name="date" type="date" />
+
+  <select name="budget">
+    <option>Budget</option>
+    <option>Under AED 200</option>
+    <option>AED 200-500</option>
+    <option>AED 500+</option>
+  </select>
+
+  <button type="submit">Book Setup</button>
+</form>
+
+</div>
+
+</body>
+</html>
